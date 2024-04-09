@@ -1,0 +1,13 @@
+#!/usr/local/bin/ksh93
+#Show some system stats
+
+DATE=$(date)
+SYS=$(uname -sr)
+HWVER=$(sysctl hw.version | cut -c 12-24)
+HWCPU=$(sysctl hw.cpuspeed)
+PKGS=$(pkg_info |wc -l | tr -d ' ')
+BATT=$(apm)
+DISK=$(df -h /home)
+                                                                                                                                                                       
+echo -e '\n'"System information:" '\n'$DATE'\n'Device: $HWVER'\n'OS: $SYS '\n'Packages: $PKGS'\n'Shell: $SHELL'\n'Browser: $BROWSER'\n\n'"$BATT"'\n'
+echo -e Space left in /home'\n'"$DISK"'\n'
