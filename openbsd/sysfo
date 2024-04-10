@@ -1,4 +1,4 @@
-#!/usr/local/bin/ksh93
+#!/bin/ksh
 #Show some system stats
 
 DATE=$(date)
