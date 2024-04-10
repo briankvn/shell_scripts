@@ -1,6 +1,5 @@
 #!/bin/bash
 ##############################################
-#                           [Bash Version]   #
 # Create a note or append an existing note.  #
 #                                            #
 # If no argument is passed, script will open #
@@ -12,7 +11,6 @@
 # Passing an argument will attempt to load   #
 # that filename if it exists or create new   #
 #       Example: filename.note               #
-#                                            #
 ##############################################
 
 # Configure variables for your preferred terminal emulator settings 
@@ -29,11 +27,9 @@ cd $DIR
 if [ $# -lt 1 ]
 then
 echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================[Void-Linux-X201]\n' >> $MONTH.note
-#echo '\n'`date +%e\ %b\ %Y\ \@\ %H:%M`\n=====================\n >> $MONTH.note
 $TERMINAL $OPTIONS -e vim -c "normal! Gzz" $MONTH.note
 else
 echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================[Void-Linux-X201]\n' >> $1.note
-#echo '\n'`date +%e\ %b\ %Y\ \@\ %H:%M`'\n=====================\n' >> $1.note
 $TERMINAL $OPTIONS -e vim -c "normal! Gzz" $1.note
 fi
 
