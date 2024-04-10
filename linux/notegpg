@@ -1,0 +1,60 @@
+#!/bin/bash
+################################################################################
+# Written by: C64                                            [Bash Version]    #
+#                                                                              #
+# Create a note or append an existing note.                                    #
+#                                                                              #
+#                                                                              #
+# If no argument is passed the script will open and append to existing file or #
+# create a new file for editing based on the current month.                    #
+#                                                                              #
+# 	Example: Running 'note' with no args will open file named 'jan.note'   #
+# 	in the month of January.                                               #
+#                                                                              #
+# Passing an argument will attempt to load that filename if it exists or       #
+# create new one.                                                              #
+#                                                                              #
+#	Example: Running 'note filename' will open the file 'filename.note'    #
+#	Useful for making specific notes.                                      #
+#	                                                                       #
+# Don't forget to set your preferred variables before running.                 #
+# Makes $DIR/tmp if not exits                                                  #
+################################################################################
+
+# Grab some info about the system to feed into
+# the note since I use this script on multiple
+# devices and OSs
+SYS=($(uname -no))
+
+# Config vars for preferred terminal emu+opts
+TERMINAL="xterm"
+OPTIONS="-rv -fa 'Monospace' -fs 12"
+
+# Config the save path here
+DIR="Documents/notes"
+
+# Get the date and format it some
+MONTH=`date +%b | tr -s "[A-Z]" "[a-z]"`
+
+cd $DIR
+# Create empty file for current month if not exist
+if [ ! -d "tmp" ] ; then mkdir tmp ; fi
+
+if [ $# -lt 1 ]  
+then
+	[ -f "$MONTH.note.gpg" ] && gpg --output ./tmp/$MONTH.note -d ./$MONTH.note.gpg
+	# Insert the date and info about what machine/OS note is written on	
+	echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[1]}-${SYS[0]}']\n' >> ./tmp/$MONTH.note
+	# Open vim/editor
+	$TERMINAL $OPTIONS -e vim -c "normal! Gzz" ./tmp/$MONTH.note
+        gpg --yes --output $MONTH.note.gpg --symmetric ./tmp/$MONTH.note && rm ./tmp/$MONTH.note
+	
+fi
+
+
+if [ $# -eq 1 ]
+then	
+	echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[1]}-${SYS[0]}'\n' >> $1.note
+	$TERMINAL $OPTIONS -e vim -c "normal! Gzz" $1.note
+fi
+
