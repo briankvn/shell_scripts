@@ -22,17 +22,17 @@
 
 # Grab some info about the system to feed into the note since I use this script 
 # on multiple devices and OSs.                                           
-SYS=$(uname -ns)
+SYS=$(uname -ns | cut -c 1-14)
 
 # Use my custom note vimrc config
-OPT="-u ./.vim/vnoterc"
+OPT="-u $HOME/.vim/vnoterc"
 # Configure the save path here.
 SAVEDIR="Documents/notes"
 
 # Get the date and format it some.
 MONTH=`date +%b | tr -s "[A-Z]" "[a-z]"`
 
-cd $DIR
+cd $SAVEDIR
 # Create empty file for current month if not exist.
 if [ ! -d "tmp" ] ; then mkdir tmp ; fi
 
