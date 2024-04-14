@@ -1,5 +1,6 @@
 #!/bin/ksh
-#Show some system stats
+# Author: briankvn
+# A basic Neofetch like script to show some system stats
 
 DATE=$(date)
 SYS=$(uname -sr)
