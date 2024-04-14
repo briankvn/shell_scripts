@@ -1,4 +1,4 @@
-#!bin/ksh
+#!/bin/ksh
 ################################################################################
 # Author: briankvn                                       [OpenBSD Version]     #
 # Create a note or append an existing note.                                    #
