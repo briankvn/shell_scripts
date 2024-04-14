@@ -21,7 +21,7 @@ OPTIONS="-rv -fa 'Monospace' -fs 12"
 DIR="Documents/notes"
 
 # Get the date and format it some
-MONTH=`date +%b | tr -s "[A-Z]" "[a-z]"`
+MONTH=$(date +%b | tr -s "[A-Z]" "[a-z]")
 
 cd $DIR
 if [ $# -lt 1 ]
