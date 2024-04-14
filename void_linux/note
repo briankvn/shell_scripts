@@ -1,6 +1,6 @@
 #!/bin/bash
 ################################################################################
-# Written by: C64                                            [Bash Version]    #
+# Written by: briankvn                                       [Bash Version]    #
 # Create a note or append an existing note.                                    #
 #                                                                              #
 # If no argument is passed the script will open and append to existing file or #
