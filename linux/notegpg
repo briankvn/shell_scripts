@@ -21,20 +21,19 @@
 # Makes $DIR/tmp if not exits                                                  #
 ################################################################################
 
-# Grab some info about the system to feed into
-# the note since I use this script on multiple
-# devices and OSs
+# Grab some info about the system to feed into the note since I use this script 
+# on multiple devices and OSs
 SYS=($(uname -no))
 
-# Config vars for preferred terminal emu+opts
+# Configure variables for preferred terminal emulator and options
 TERMINAL="xterm"
 OPTIONS="-rv -fa 'Monospace' -fs 12"
 
-# Config the save path here
+# Configure save path here
 DIR="Documents/notes"
 
 # Get the date and format it some
-MONTH=`date +%b | tr -s "[A-Z]" "[a-z]"`
+MONTH=$(date +%b | tr -s "[A-Z]" "[a-z]")
 
 cd $DIR
 # Create empty file for current month if not exist
@@ -54,6 +53,7 @@ fi
 
 if [ $# -eq 1 ]
 then	
+	#These notes are not encrypted
 	echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[1]}-${SYS[0]}'\n' >> $1.note
 	$TERMINAL $OPTIONS -e vim -c "normal! Gzz" $1.note
 fi
