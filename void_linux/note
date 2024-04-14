@@ -1,1 +1,62 @@
+#!/bin/bash
+################################################################################
+# Written by: C64                                            [Bash Version]    #
+# Create a note or append an existing note.                                    #
+#                                                                              #
+# If no argument is passed the script will open and append to existing file or #
+# create a new file for editing based on the current month.                    #
+#                                                                              #
+# 	Example: Running 'note' with no args will open file named 'jan.note'   #
+# 	in the month of January.                                               #
+#                                                                              #
+# Passing an argument will attempt to load that filename if it exists or       #
+# create new one.                                                              #
+#                                                                              #
+#	Example: Running 'note filename' will open the file 'filename.note'    #
+#	Useful for making specific notes.                                      #
+#                                                                              #
+# Things to setup before running;                                              #
+# 	1. Set your preferred variables.                                       #
+# 	2. Make sure $SAVEDIR directories exist.                               #
+# 	3. Have gpg (gnu privacy guard) installed.                             #
+################################################################################
+
+# Grab some info about the system to feed into the note since I use this script 
+# on multiple devices and OSs.                                           
+SYS=($(uname -no))
+
+# Configure variables for preferred terminal emulator & options.
+TERMINAL="xterm"
+OPTIONS="-rv -fa 'Monospace' -fs 12"
+
+# Configure the save path here.
+SAVEDIR="Documents/notes"
+
+# Get the date and format it some.
+MONTH=$(date +%b | tr -s [:upper:] [:lower:])
+
+cd $SAVEDIR
+# Create empty file for current month if not exist.
+if [ ! -d "tmp" ] ; then mkdir tmp ; fi
+
+if [ $# -lt 1 ]  
+then
+	[ -f "$MONTH.note.gpg" ] && gpg --output ./tmp/$MONTH.note -d ./$MONTH.note.gpg
+	# Insert the date and info about what machine/OS note is written on	
+	echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[1]}-${SYS[0]}']\n' >> ./tmp/$MONTH.note
+	# Open vim/editor
+	$TERMINAL $OPTIONS -e vim -c "normal! Gzz" ./tmp/$MONTH.note
+        gpg --yes --output $MONTH.note.gpg --symmetric ./tmp/$MONTH.note && rm ./tmp/$MONTH.note
+	
+fi
+
+
+if [ $# -eq 1 ]
+then	
+	[ -f "$1.note.gpg" ] && gpg --output ./tmp/$1.note -d ./$1.note.gpg
+	echo -e '\n' $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[1]}-${SYS[0]}'\n' >> ./tmp/$1.note
+	$TERMINAL $OPTIONS -e vim -c "normal! Gzz" ./tmp/$1.note
+        gpg --yes --output $1.note.gpg --symmetric ./tmp/$1.note && rm ./tmp/$1.note
+fi
+
 
