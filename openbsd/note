@@ -39,12 +39,15 @@ if [ ! -d "tmp" ] ; then mkdir tmp ; fi
 
 if [ $# -lt 1 ]  
 then
-	[ -f "$MONTH.note.gpg" ] && gpg --output ./tmp/$MONTH.note -d ./$MONTH.note.gpg
+	[ -f "$MONTH.note.gpg" ] && 
+	gpg --output ./tmp/$MONTH.note -d ./$MONTH.note.gpg
 	# Insert the date and info about what machine/OS note is written on	
-	echo -e $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[0]}']\n' >> ./tmp/$MONTH.note
+	echo -e $(date +%e\ %b\ %Y\ \@\ %H:%M)' '${SYS[0]}']\n' >> ./tmp/$MONTH.note
 	# Open vim/editor
 	vim $OPT -c "normal! Gzz" ./tmp/$MONTH.note
-        gpg --yes --output $MONTH.note.gpg --symmetric ./tmp/$MONTH.note && rm ./tmp/$MONTH.note
+	echo -e "[End]"'\n' >> tmp/$MONTH.note 
+        gpg --yes --output $MONTH.note.gpg --symmetric ./tmp/$MONTH.note && 
+	rm ./tmp/$MONTH.note
 	
 fi
 
@@ -52,9 +55,10 @@ fi
 if [ $# -eq 1 ]
 then	
 	[ -f "$1.note.gpg" ] && gpg --output ./tmp/$1.note -d ./$1.note.gpg
-	echo -e $(date +%e\ %b\ %Y\ \@\ %H:%M)'\n====================['${SYS[0]}'\n' >> ./tmp/$1.note
+	echo -e $(date +%e\ %b\ %Y\ \@\ %H:%M)' '${SYS[0]}'\n' >> ./tmp/$1.note
 	vim $OPT -c "normal! Gzz" ./tmp/$1.note
-        gpg --yes --output $1.note.gpg --symmetric ./tmp/$1.note && rm ./tmp/$1.note
+        gpg --yes --output $1.note.gpg --symmetric ./tmp/$1.note && 
+	rm ./tmp/$1.note
 fi
 
 
